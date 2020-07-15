@@ -26,9 +26,24 @@ export default function App() {
 
     await api.post(`repositories/${id}/like`);
 
-    const response = await api.get('repositories');
+    //New
+    const projectIndex = repositories.findIndex(project => project.id === id);
 
-    setRepositories(response.data);
+    const { title, url, techs, likes } = repositories.find(project => project.id === id);
+
+    const project = {
+      id,
+      title,
+      url,
+      techs,
+      likes: likes + 1,
+    };
+
+    const attLikeRepository = repositories.slice();
+
+    attLikeRepository[projectIndex] = project;
+    
+    setRepositories(attLikeRepository);
   }
 
   return (
